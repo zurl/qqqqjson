@@ -1,0 +1,16 @@
+{
+    "boolean" : false,
+    "number" : 1,
+    "float" : 1.1,
+    "string" : "value",
+    "array" : [ "a", "b" ],
+    "mysql" : {
+        "admin" : {
+            "group" : [
+                {
+                    "username" : "3150104031"
+                }
+            ]
+        }
+    }
+}
