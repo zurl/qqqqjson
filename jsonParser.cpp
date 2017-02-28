@@ -5,8 +5,14 @@ char parseStringBuffer[ 65536 ];
 bool isEscapeChar(char chr){
     return chr == ' ' || chr == '\t' || chr == '\n';
 }
+
 bool isNumber( char chr){
     return (chr >= '0' && chr <= '9') || chr == '-' ;
+}
+
+bool isValidAttr( char chr){
+    return (chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z')
+        || chr == '_' || chr == '$' || (chr >= '0' && chr <= '9');
 }
 
 JSON * parseObject(const char * str, size_t & pos);
@@ -164,10 +170,6 @@ JSON * parseObject(const char * str, size_t & pos){
     return (JSON *) jsonObject;
 }
 
-bool isValidAttr( char chr){
-    return (chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z')
-        || chr == '_' || chr == '$' || (chr >= '0' && chr <= '9');
-}
 
 JSON * parsePath(const char * path, size_t & pos, JSON * root){
     if(path[pos] == 0 || root == nullptr) return root;

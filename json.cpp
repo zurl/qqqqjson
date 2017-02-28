@@ -7,6 +7,9 @@ std::string getIndent(size_t indent){
     return result;
 }
 
+JSONString::JSONString( const std::string & str ) : str(str){}
+JSONString::JSONString( const char * str ) : str(str){}
+
 JSONString::JSONString( const char * str , size_t n ): str(str, n){}
 std::string JSONString::toString(bool format, size_t indent)  {
     return "\"" + str + "\"";
@@ -122,7 +125,7 @@ JSONDouble * JSON::toDouble(){
     return jsonDouble;
 }
 
-char jsonBuffer [ 65536 * 64 ];
+char jsonBuffer [ JSON_BUFFER_SIZE ];
 JSON * JSON::fromFile(const char * fileName){
     FILE * file = fopen(fileName, "r");
     if( !file )return nullptr;
@@ -134,9 +137,10 @@ JSON * JSON::fromFile(const char * fileName){
     return json;
 }
 
-void JSON::saveIntoFile(const char * fileName, bool format = true){
+bool JSON::saveIntoFile(const char * fileName, bool format){
     FILE * file = fopen(fileName, "w");
-    if( !file )return nullptr;
-    fputs(file, this->toString(format));
-    close(file);
+    if( !file )return false;
+    fputs(this->toString(format).c_str(), file);
+    fclose(file);
+    return true;
 }

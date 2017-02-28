@@ -9,6 +9,8 @@
 #include <sstream>
 #include <iostream>
 
+const size_t JSON_BUFFER_SIZE = 10888897;
+
 class JSONInteger; class JSONDouble;
 
 class JSON{
@@ -18,7 +20,7 @@ class JSON{
     };
     static JSON * fromFile(const char * fileName);
     static JSON * parse(const char * str);
-    void saveIntoFile(const char * fileName);
+    bool saveIntoFile(const char * fileName, bool format = true);
     JSON * path(const std::string &path);
     JSON * path(const char * path);
     JSON * get(size_t index);
@@ -34,6 +36,8 @@ class JSON{
 class JSONString : public JSON{
     public:
     std::string str;
+    JSONString( const std::string & str );
+    JSONString( const char * str );
     JSONString( const char * str , size_t n );
     virtual std::string toString(bool format = false, size_t indent = 0) override ;
     virtual Type type() override ;
